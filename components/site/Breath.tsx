@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Users, User, AlertCircle } from "lucide-react";
 import { useLead } from "./Lead";
 
@@ -86,13 +85,9 @@ export default function Breath() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {cards.map((c, i) => (
-            <motion.article
+            <article style={{ transitionDelay: `${i * 0.15}s` }}
               key={c.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
-              className="group rounded-3xl overflow-hidden bg-white/[0.04] border border-white/10 flex flex-col"
+              className="reveal group rounded-3xl overflow-hidden bg-white/[0.04] border border-white/10 flex flex-col"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Pic src={c.image} sizes="(max-width: 768px) 100vw, 50vw" alt={c.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" />
@@ -118,7 +113,7 @@ export default function Breath() {
                   <Button variant="light" onClick={() => open(c.id)}>{c.cta}</Button>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
         <p className="flex items-start gap-2 text-white/45 text-[14px] mt-8 max-w-[760px]">

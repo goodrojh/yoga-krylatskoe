@@ -11,6 +11,7 @@ import Pricing from "@/components/site/Pricing";
 import Location from "@/components/site/Location";
 import FAQ from "@/components/site/FAQ";
 import Footer, { MobileBar } from "@/components/site/Footer";
+import RevealObserver from "@/components/site/RevealObserver";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       </main>
       <Footer />
       <MobileBar />
+      <RevealObserver />
     </LeadProvider>
   );
 }

@@ -33,18 +33,17 @@ export default function Picker() {
           <p className="text-muted text-[17px] leading-relaxed mb-10">Выберите состояние — подскажем, с какой практики начать.</p>
           <div className="flex flex-col gap-2">
             {OPTIONS.map((o, i) => (
-              <motion.button
+              <button
                 key={o.feel}
-                whileTap={{ scale: 0.96 }}
                 onClick={() => setActive(i)}
-                className={
+                className={"active:scale-[0.97] transition-transform " + (
                   "h-14 rounded-2xl px-5 text-left text-[15px] font-medium border transition-all flex items-center justify-between " +
                   (active === i ? "bg-ink text-white border-ink" : "bg-white border-ink/5 hover:border-ink/20")
-                }
+                )}
               >
                 {o.feel}
                 <ArrowRight className={"w-4 h-4 transition-opacity " + (active === i ? "opacity-100" : "opacity-30")} />
-              </motion.button>
+              </button>
             ))}
           </div>
         </div>

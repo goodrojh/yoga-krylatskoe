@@ -42,12 +42,7 @@ export function Nav() {
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="fixed top-0 inset-x-0 z-50 pt-4"
-    >
+    <nav className="fade-up fixed top-0 inset-x-0 z-50 pt-4">
       <div className="max-w-[1240px] mx-auto px-3 md:px-8">
       <div
         className={
@@ -127,7 +122,7 @@ export function Nav() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }
 
@@ -138,7 +133,7 @@ export default function Hero() {
       {/* «Дышащий» фон: медленный зум как вдох-выдох */}
       <img
         src={asset("/img/hero.webp")}
-        srcSet={`${asset("/img/hero-sm.webp")} 860w, ${asset("/img/hero.webp")} 2000w`}
+        srcSet={`${asset("/img/hero-sm.webp")} 860w, ${asset("/img/hero.webp")} 1600w`}
         sizes="100vw"
         alt="Практика йоги в студии с видом на парк"
         className="hero-breathe absolute inset-0 w-full h-full object-cover object-[70%_center] z-0"

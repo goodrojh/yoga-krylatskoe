@@ -1,15 +1,11 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";
 import { Check } from "lucide-react";
 import { useLead } from "./Lead";
 import { Container, Section, SectionHead, Button, Pic } from "./ui";
 
 import type { FormId } from "@/lib/forms";
 
-const container: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
-const card: Variants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
 
 const ITEMS: { id: FormId; n: string; title: string; text: string; image: string; points: string[]; pos?: string }[] = [
   {
@@ -59,18 +55,12 @@ export default function Directions() {
           text="Для тех, кто впервые встаёт на коврик, для будущих мам и для тех, кто хочет сильное и свободное тело."
         />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          {ITEMS.map((it) => (
-            <motion.article
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {ITEMS.map((it, idx) => (
+            <article
               key={it.id}
-              variants={card}
-              className="group bg-white rounded-3xl overflow-hidden flex flex-col border border-ink/5"
+              style={{ transitionDelay: `${(idx % 2) * 0.1}s` }}
+              className="reveal group bg-white rounded-3xl overflow-hidden flex flex-col border border-ink/5"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Pic
@@ -102,9 +92,9 @@ export default function Directions() {
                   </Button>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
-        </motion.div>
+        </div>
       </Container>
     </Section>
   );

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { Check, ArrowUpRight } from "lucide-react";
 import { Button, Pic } from "./ui";
 import { useLead } from "./Lead";
@@ -37,12 +36,8 @@ export default function Pricing() {
     <Section id="pricing" tone="sand">
       <Container>
       <SectionHead title="Цены" accent="без мелкого шрифта" text="Чем регулярнее практика, тем ниже цена занятия." />
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        className="relative rounded-3xl overflow-hidden"
+      <div
+        className="reveal relative rounded-3xl overflow-hidden"
       >
         <Pic src={"/img/studio.webp"} sizes="100vw" alt="Зал студии" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/10" />
@@ -50,13 +45,9 @@ export default function Pricing() {
         <div className="relative z-10 bg-white/85 md:bg-white/55 md:backdrop-blur-xl m-3 md:m-8 rounded-2xl overflow-hidden border border-white/40">
           <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/50">
             {plans.map((p, idx) => (
-              <motion.div
+              <div style={{ transitionDelay: `${0.2 + idx * 0.1}s` }}
                 key={p.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 + idx * 0.1 }}
-                className={"flex flex-col px-6 md:px-8 py-9 " + (p.popular ? "bg-white/50" : "")}
+                className={"reveal " + ("flex flex-col px-6 md:px-8 py-9 " + (p.popular ? "bg-white/50" : ""))}
               >
                 <div className="pb-7 border-b border-ink/10">
                   <div className="flex items-start justify-between gap-3 mb-1">
@@ -94,23 +85,18 @@ export default function Pricing() {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <div className="mt-6 grid md:grid-cols-3 gap-6">
         {extras.map((e, i) => (
-          <motion.button
+          <button style={{ transitionDelay: `${i * 0.1}s` }}
             key={e.id}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-            whileHover={{ y: -3 }}
             onClick={() => open(e.id)}
-            className="group text-left bg-white rounded-3xl border border-ink/5 p-6 flex items-center justify-between gap-4 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-shadow"
+            className="reveal group text-left bg-white rounded-3xl border border-ink/5 p-6 flex items-center justify-between gap-4 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-shadow"
           >
             <div>
               <p className="font-semibold">{e.name}</p>
@@ -122,7 +108,7 @@ export default function Pricing() {
                 <ArrowUpRight className="w-4 h-4" />
               </span>
             </div>
-          </motion.button>
+          </button>
         ))}
       </div>
       </Container>

@@ -89,25 +89,17 @@ export default function Footer() {
         <div className="absolute inset-0 bg-black/35" />
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pt-24 pb-10 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="font-display text-[44px] md:text-[80px] text-white leading-[1] max-w-[900px]"
+          <h2
+            className="reveal font-display text-[44px] md:text-[80px] text-white leading-[1] max-w-[900px]"
           >
             Начните <span className="text-[#e9cfae]">с одного вдоха</span>
-          </motion.h2>
+          </h2>
           <p className="text-white/80 text-[17px] mt-6 max-w-md">Оставьте номер — перезвоним, ответим на вопросы и подберём время первого занятия.</p>
           <InlineCallback />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="relative z-10 bg-black/50 md:bg-black/25 md:backdrop-blur-xl border border-white/15 rounded-3xl mx-3 md:mx-5 mb-3 md:mb-5 p-7 md:p-10 text-white"
+        <div style={{ transitionDelay: `${0.2}s` }}
+          className="reveal relative z-10 bg-black/50 md:bg-black/25 md:backdrop-blur-xl border border-white/15 rounded-3xl mx-3 md:mx-5 mb-3 md:mb-5 p-7 md:p-10 text-white"
         >
           <div className="flex flex-col md:flex-row justify-between gap-10">
             <div className="md:w-[32%]">
@@ -146,7 +138,7 @@ export default function Footer() {
             <span>© {new Date().getFullYear()} {SITE.name} · {SITE.descriptor} · Карта © OpenStreetMap</span>
             <MessengerIcons size={40} ring="bg-white/10 hover:bg-white/20" />
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

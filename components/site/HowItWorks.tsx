@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { PhoneCall, Footprints, Repeat } from "lucide-react";
 import { useLead } from "./Lead";
 import { Container, Section, SectionHead, Button } from "./ui";
@@ -21,21 +20,13 @@ export default function HowItWorks() {
         <div className="relative grid md:grid-cols-3 gap-10 md:gap-6">
           {/* Соединительная линия процесса */}
           <div className="hidden md:block absolute top-7 left-7 right-[calc(33.333%-28px)] h-px bg-ink/15" />
-          <motion.div
-            className="hidden md:block absolute top-7 left-7 right-[calc(33.333%-28px)] h-px bg-clay origin-left"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: "easeInOut" }}
+          <div
+            className="reveal-x hidden md:block absolute top-7 left-7 right-[calc(33.333%-28px)] h-px bg-clay origin-left"
           />
           {STEPS.map((s, i) => (
-            <motion.div
+            <div style={{ transitionDelay: `${i * 0.25}s` }}
               key={s.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.25 }}
-              className="relative flex md:flex-col gap-5 md:gap-0"
+              className="reveal relative flex md:flex-col gap-5 md:gap-0"
             >
               <div className="relative w-14 h-14 rounded-full bg-white border border-ink/10 flex items-center justify-center shrink-0 ring-8 ring-cream">
                 <s.icon className="w-5 h-5 text-clay" />
@@ -45,7 +36,7 @@ export default function HowItWorks() {
                 <h3 className="font-display text-[24px] leading-tight mt-1">{s.title}</h3>
                 <p className="text-muted text-[16px] leading-relaxed mt-3">{s.text}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { MapPin, Navigation, Phone, Map as MapIcon } from "lucide-react";
 import { useLead } from "./Lead";
 import { SITE } from "@/lib/config";
@@ -19,11 +18,8 @@ export default function Location() {
   return (
     <Section id="location" tone="sand">
       <Container className="grid lg:grid-cols-12 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-5 bg-white rounded-3xl p-7 md:p-10 flex flex-col border border-ink/5"
+        <div
+          className="reveal lg:col-span-5 bg-white rounded-3xl p-7 md:p-10 flex flex-col border border-ink/5"
         >
           <h2 className="font-display text-[36px] md:text-[44px] leading-[1.04]">
             Рядом с домом <span className="text-muted">в Кунцево</span>
@@ -68,14 +64,10 @@ export default function Location() {
               <Phone className="w-4 h-4" /> Перезвоните мне
             </button>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="lg:col-span-7 rounded-3xl overflow-hidden min-h-[420px] md:min-h-[520px] bg-[#ece6dc] relative"
+        <div style={{ transitionDelay: `${0.1}s` }}
+          className="reveal lg:col-span-7 rounded-3xl overflow-hidden min-h-[420px] md:min-h-[520px] bg-[#ece6dc] relative"
         >
           {live ? (
             <iframe
@@ -108,7 +100,7 @@ export default function Location() {
               <span className="absolute left-3 bottom-3 text-[11px] text-ink/60 bg-white/80 rounded px-1.5 py-0.5 pointer-events-none">© OpenStreetMap</span>
             </>
           )}
-        </motion.div>
+        </div>
       </Container>
     </Section>
   );

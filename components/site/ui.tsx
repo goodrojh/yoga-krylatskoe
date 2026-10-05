@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { asset } from "@/lib/config";
 
@@ -51,12 +50,8 @@ export function SectionHead({
 }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 items-end mb-14 md:mb-16">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="lg:col-span-7 font-display text-[36px] md:text-[52px] leading-[1.04]"
+      <h2
+        className="reveal lg:col-span-7 font-display text-[36px] md:text-[52px] leading-[1.04]"
       >
         {title}
         {accent && (
@@ -65,18 +60,14 @@ export function SectionHead({
             <span className={dark ? "text-white/45" : "text-muted"}>{accent}</span>
           </>
         )}
-      </motion.h2>
+      </h2>
       {(text || children) && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className={"lg:col-span-5 text-[17px] leading-relaxed " + (dark ? "text-white/65" : "text-muted")}
+        <div style={{ transitionDelay: `${0.1}s` }}
+          className={"reveal " + ("lg:col-span-5 text-[17px] leading-relaxed " + (dark ? "text-white/65" : "text-muted"))}
         >
           {text && <p>{text}</p>}
           {children}
-        </motion.div>
+        </div>
       )}
     </div>
   );

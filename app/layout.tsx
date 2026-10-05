@@ -13,6 +13,8 @@ const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin", "cyrillic"],
   weight: ["600"],
+  // optional: заголовок не «прыгает», когда догружается шрифт (нет сдвига вёрстки)
+  display: "optional",
 });
 
 export const metadata: Metadata = {
@@ -57,7 +59,11 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
+      <head>
+        {/* без JS контент виден сразу; с JS — включаются анимации появления */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className={`${inter.variable} ${interTight.variable} antialiased`}>
         <script
           type="application/ld+json"

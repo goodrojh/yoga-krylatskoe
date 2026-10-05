@@ -60,23 +60,16 @@ export default function Transformation() {
         {/* Шкала времени */}
         <div className="relative hidden md:grid grid-cols-4 gap-6 mb-8">
           <div className="absolute left-0 right-0 top-[7px] h-px bg-ink/15" />
-          <motion.div
+          <div
             key={track}
-            className="absolute left-0 top-[7px] h-px bg-clay origin-left"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.6, ease: "easeInOut" }}
+            className="reveal-x absolute left-0 top-[7px] h-px bg-clay origin-left"
             style={{ right: 0 }}
           />
           {STAGES.map((s, i) => (
             <div key={s} className="relative">
-              <motion.span
+              <span style={{ transitionDelay: `${0.2 + i * 0.4}s` }}
                 key={track + i}
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ delay: 0.2 + i * 0.4, type: "spring" }}
-                className="block w-[15px] h-[15px] rounded-full bg-clay ring-4 ring-sand"
+                className="reveal-pop block w-[15px] h-[15px] rounded-full bg-clay ring-4 ring-sand"
               />
               <p className="mt-4 text-[14px] font-semibold">{s}</p>
             </div>
