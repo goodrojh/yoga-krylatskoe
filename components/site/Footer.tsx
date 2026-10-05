@@ -136,7 +136,7 @@ export default function Footer() {
           </div>
           <div className="mt-8 pt-5 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[12px] text-white/50">
             <span>© {new Date().getFullYear()} {SITE.name} · {SITE.descriptor} · Карта © OpenStreetMap</span>
-            <MessengerIcons size={40} ring="bg-white/10 hover:bg-white/20" />
+            
           </div>
         </div>
       </div>
@@ -167,8 +167,10 @@ export function MobileBar() {
   return (
     <div
       className={
-        "md:hidden fixed inset-x-3 z-40 flex items-center gap-1.5 p-1.5 rounded-full bg-[#1d1c19] shadow-2xl border border-white/10 transition-transform duration-300 " +
-        (show ? "translate-y-0" : "translate-y-[calc(100%+24px)]")
+        "md:hidden fixed inset-x-3 z-40 flex items-center gap-1.5 p-1.5 rounded-full bg-[#1d1c19] shadow-2xl border border-white/10 transition-[transform,opacity,visibility] duration-300 " +
+        // в скрытом состоянии панель не только уезжает вниз, но и становится невидимой —
+        // иначе в браузерах с собственной нижней панелью (Яндекс на iOS) торчит край
+        (show ? "translate-y-0 opacity-100 visible" : "translate-y-[calc(100%+48px)] opacity-0 invisible pointer-events-none")
       }
       style={{ bottom: "calc(12px + env(safe-area-inset-bottom))" }}
       aria-hidden={!show}
