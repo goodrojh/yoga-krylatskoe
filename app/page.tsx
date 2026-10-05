@@ -6,6 +6,7 @@ import Picker from "@/components/site/Picker";
 import HowItWorks from "@/components/site/HowItWorks";
 import Transformation from "@/components/site/Transformation";
 import Breath from "@/components/site/Breath";
+import Instructor from "@/components/site/Instructor";
 import Pricing from "@/components/site/Pricing";
 import Location from "@/components/site/Location";
 import FAQ from "@/components/site/FAQ";
@@ -21,6 +22,7 @@ export default function Home() {
         <Transformation />
         <Picker />
         <Breath />
+        <Instructor />
         <Pricing />
         <HowItWorks />
         <Location />

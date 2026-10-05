@@ -42,7 +42,7 @@ export default function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <Section id="faq" tone="sand">
+    <Section id="faq">
       <Container className="grid lg:grid-cols-12 gap-10 lg:gap-6">
         <div className="lg:col-span-4">
           <h2 className="font-display text-[36px] md:text-[52px] leading-[1.04]">
@@ -90,16 +90,12 @@ export default function FAQ() {
           ))}
         </div>
 
-        <div className="mt-10 bg-cream rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-10 bg-sand rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="flex -space-x-3">
-              {["/img/prenatal.webp", "/img/personal.webp", "/img/vivation.webp"].map((src, i) => (
-                <img key={src} src={asset(src)} alt="" className="w-12 h-12 rounded-full border-2 border-cream object-cover" style={{ zIndex: 3 - i }} />
-              ))}
-            </div>
+            <img src={asset("/img/instructor.webp")} alt="Инструктор студии" className="w-14 h-14 rounded-full object-cover object-[center_20%] shrink-0" />
             <div>
               <p className="font-semibold">Не нашли ответ?</p>
-              <p className="text-sm text-muted">Спросите — ответим лично</p>
+              <p className="text-sm text-muted">Инструктор ответит лично</p>
             </div>
           </div>
           <Button variant="dark" onClick={() => open("question")}>Задать вопрос</Button>

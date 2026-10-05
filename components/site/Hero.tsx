@@ -9,6 +9,7 @@ import { SITE, asset } from "@/lib/config";
 const NAV = [
   { label: "Направления", href: "#directions" },
   { label: "Дыхание", href: "#breath" },
+  { label: "Инструктор", href: "#instructor" },
   { label: "Цены", href: "#pricing" },
   { label: "Как добраться", href: "#location" },
   { label: "Вопросы", href: "#faq" },
@@ -57,7 +58,7 @@ export function Nav() {
           <Logo />
         </a>
 
-        <div className="hidden lg:flex items-center gap-7">
+        <div className="hidden lg:flex items-center gap-6">
           {NAV.map((i) => (
             <a key={i.href} href={i.href} className="text-[14px] font-medium text-white/70 hover:text-white transition-colors relative group">
               {i.label}
@@ -67,7 +68,7 @@ export function Nav() {
         </div>
 
         <div className="flex-1 flex items-center justify-end gap-2">
-          <a href={`tel:${SITE.phoneHref}`} className="hidden md:inline-flex text-[14px] font-medium text-white/80 hover:text-white px-3 py-2 whitespace-nowrap">
+          <a href={`tel:${SITE.phoneHref}`} className="hidden xl:inline-flex text-[14px] font-medium text-white/80 hover:text-white px-3 py-2 whitespace-nowrap">
             {SITE.phone}
           </a>
           <button

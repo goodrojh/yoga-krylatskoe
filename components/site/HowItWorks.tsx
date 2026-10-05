@@ -14,7 +14,7 @@ const STEPS = [
 export default function HowItWorks() {
   const { open } = useLead();
   return (
-    <Section id="steps" tone="sand">
+    <Section id="steps">
       <Container>
         <SectionHead title="Три шага" accent="до первого выдоха" text="Ничего не нужно покупать заранее и готовиться — просто приходите." />
 
@@ -37,7 +37,7 @@ export default function HowItWorks() {
               transition={{ delay: i * 0.25 }}
               className="relative flex md:flex-col gap-5 md:gap-0"
             >
-              <div className="relative w-14 h-14 rounded-full bg-cream border border-ink/10 flex items-center justify-center shrink-0 ring-8 ring-sand">
+              <div className="relative w-14 h-14 rounded-full bg-white border border-ink/10 flex items-center justify-center shrink-0 ring-8 ring-cream">
                 <s.icon className="w-5 h-5 text-clay" />
               </div>
               <div className="md:mt-8 md:pr-6">

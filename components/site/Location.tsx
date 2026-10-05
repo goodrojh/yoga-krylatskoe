@@ -11,7 +11,7 @@ const MAP_QUERY = encodeURIComponent(`${SITE.city}, ${SITE.address}`);
 export default function Location() {
   const { open } = useLead();
   return (
-    <Section id="location">
+    <Section id="location" tone="sand">
       <Container className="grid lg:grid-cols-12 gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

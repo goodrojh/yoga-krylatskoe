@@ -34,7 +34,7 @@ const extras: { id: FormId; name: string; price: string; note: string }[] = [
 export default function Pricing() {
   const { open } = useLead();
   return (
-    <Section id="pricing">
+    <Section id="pricing" tone="sand">
       <Container>
       <SectionHead title="Цены" accent="без мелкого шрифта" text="Чем регулярнее практика, тем ниже цена занятия." />
       <motion.div
