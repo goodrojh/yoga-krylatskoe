@@ -46,7 +46,7 @@ export function Nav() {
       <div className="max-w-[1240px] mx-auto px-3 md:px-8">
       <div
         className={
-          "md:-mx-5 flex items-center justify-between p-2 rounded-full backdrop-blur-md border transition-colors duration-500 " +
+          "md:-mx-5 flex items-center justify-between gap-4 xl:gap-6 p-2 rounded-full backdrop-blur-md border transition-colors duration-500 " +
           (scrolled ? "bg-[#1d1c19]/90 border-white/10 shadow-xl" : "bg-white/5 border-white/10")
         }
       >
@@ -54,7 +54,7 @@ export function Nav() {
           <Logo />
         </a>
 
-        <div className="hidden xl:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 shrink-0">
           {NAV.map((i) => (
             <a key={i.href} href={i.href} className="text-[14px] font-medium text-white/70 hover:text-white transition-colors relative group">
               {i.label}
@@ -74,7 +74,7 @@ export function Nav() {
           >
             Записаться
           </button>
-          <button onClick={() => setMenu(true)} aria-label="Меню" className="xl:hidden w-10 h-10 rounded-full text-white flex items-center justify-center hover:bg-white/10">
+          <button onClick={() => setMenu(true)} aria-label="Меню" className="lg:hidden w-10 h-10 rounded-full text-white flex items-center justify-center hover:bg-white/10">
             <Menu className="w-5 h-5" />
           </button>
         </div>
