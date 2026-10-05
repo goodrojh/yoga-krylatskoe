@@ -4,7 +4,7 @@ import Hero, { Nav } from "@/components/site/Hero";
 import Directions from "@/components/site/Directions";
 import Picker from "@/components/site/Picker";
 import HowItWorks from "@/components/site/HowItWorks";
-import Benefits from "@/components/site/Benefits";
+import Transformation from "@/components/site/Transformation";
 import Breath from "@/components/site/Breath";
 import Pricing from "@/components/site/Pricing";
 import Location from "@/components/site/Location";
@@ -18,11 +18,11 @@ export default function Home() {
       <main className="min-h-screen">
         <Hero />
         <Directions />
+        <Transformation />
         <Picker />
-        <HowItWorks />
-        <Benefits />
         <Breath />
         <Pricing />
+        <HowItWorks />
         <Location />
         <FAQ />
       </main>

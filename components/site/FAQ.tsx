@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, X, Sprout, Baby, Wallet, ArrowRight } from "lucide-react";
+import { Plus, X, Sprout, Baby, Wallet } from "lucide-react";
 import { useLead } from "./Lead";
 import { asset } from "@/lib/config";
+import { Container, Section, Button } from "./ui";
 
 type Item = { q: string; a: string };
 
@@ -41,23 +42,23 @@ export default function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-cream py-24 px-4 md:px-[80px]">
-      <div className="max-w-[820px] mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="font-display text-[44px] md:text-6xl leading-tight mb-3">
-            Всё, что хочется <span className="italic text-sage">спросить</span>
+    <Section id="faq" tone="sand">
+      <Container className="grid lg:grid-cols-12 gap-10 lg:gap-6">
+        <div className="lg:col-span-4">
+          <h2 className="font-display text-[36px] md:text-[52px] leading-[1.04]">
+            Частые <span className="text-muted">вопросы</span>
           </h2>
-          <p className="text-muted">Короткие ответы на частые вопросы</p>
+          <p className="text-muted text-[17px] leading-relaxed mt-5">Короткие ответы для новичков, будущих мам и про оплату.</p>
         </div>
-
-        <div className="flex justify-start sm:justify-center gap-2 border-b border-ink/10 mb-6 overflow-x-auto no-scrollbar">
+        <div className="lg:col-span-8">
+        <div className="flex border-b border-ink/10 mb-2 overflow-x-auto no-scrollbar">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => { setTab(t.id); setOpenIdx(null); }}
               className={
-                "inline-flex items-center gap-2 px-5 py-3 text-[15px] border-b-2 whitespace-nowrap transition-all " +
-                (tab === t.id ? "text-sage font-semibold border-sage" : "text-muted border-transparent")
+                "inline-flex items-center gap-2 mr-7 py-3 text-[15px] border-b-2 -mb-px whitespace-nowrap transition-all " +
+                (tab === t.id ? "text-ink font-semibold border-ink" : "text-muted border-transparent hover:text-ink")
               }
             >
               <t.icon className="w-4 h-4" /> {t.label}
@@ -69,7 +70,7 @@ export default function FAQ() {
           {data[tab].map((item, i) => (
             <div key={tab + i} className="border-b border-ink/10 py-5">
               <button onClick={() => setOpenIdx(openIdx === i ? null : i)} className="w-full flex justify-between items-center gap-4 text-left">
-                <span className="text-[17px] font-medium">{item.q}</span>
+                <span className="text-[17px] font-semibold">{item.q}</span>
                 <span className="text-muted shrink-0">{openIdx === i ? <X size={20} strokeWidth={1.5} /> : <Plus size={20} strokeWidth={1.5} />}</span>
               </button>
               <AnimatePresence initial={false}>
@@ -89,11 +90,11 @@ export default function FAQ() {
           ))}
         </div>
 
-        <div className="mt-12 bg-sand rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-10 bg-cream rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="flex -space-x-3">
               {["/img/prenatal.webp", "/img/personal.webp", "/img/vivation.webp"].map((src, i) => (
-                <img key={src} src={asset(src)} alt="" className="w-12 h-12 rounded-full border-2 border-sand object-cover" style={{ zIndex: 3 - i }} />
+                <img key={src} src={asset(src)} alt="" className="w-12 h-12 rounded-full border-2 border-cream object-cover" style={{ zIndex: 3 - i }} />
               ))}
             </div>
             <div>
@@ -101,11 +102,10 @@ export default function FAQ() {
               <p className="text-sm text-muted">Спросите — ответим лично</p>
             </div>
           </div>
-          <button onClick={() => open("question")} className="group bg-ink text-white rounded-full px-7 py-3.5 font-semibold flex items-center gap-2 hover:bg-sage-dark transition-colors">
-            Задать вопрос <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          <Button variant="dark" onClick={() => open("question")}>Задать вопрос</Button>
         </div>
-      </div>
-    </section>
+        </div>
+      </Container>
+    </Section>
   );
 }

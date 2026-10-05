@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Users, User, AlertCircle } from "lucide-react";
+import { Users, User, AlertCircle } from "lucide-react";
 import { useLead } from "./Lead";
 import { asset } from "@/lib/config";
+import { Container, Section, Button } from "./ui";
 
 // Сигнатурный элемент сайта: круг, который дышит вместе с посетителем (4 с вдох / 4 с выдох)
 function BreathCircle() {
@@ -38,7 +39,7 @@ function BreathCircle() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.6 }}
-          className="relative font-display italic text-4xl text-[#f3d9b8]"
+          className="relative font-display text-[28px] text-[#e9cfae]"
         >
           {inhale ? "вдох" : "выдох"}
         </motion.span>
@@ -75,23 +76,20 @@ export default function Breath() {
   ];
 
   return (
-    <section id="breath" className="relative bg-[#141311] text-white py-24 md:py-32 px-4 md:px-6 overflow-hidden grain">
+    <Section id="breath" tone="dark" className="grain">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-clay/10 rounded-full blur-[160px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-center mb-16 md:mb-20">
-          <div>
-            <p className="text-[#f3d9b8] uppercase tracking-[0.25em] text-xs font-bold mb-4">Дыхательные практики</p>
-            <h2 className="font-display text-[46px] md:text-7xl leading-[0.98]">
-              Сделайте вдох <br />
-              <span className="italic text-[#f3d9b8]">вместе с нами</span>
+      <Container className="relative z-10">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-6 items-center mb-16">
+          <div className="lg:col-span-7">
+            <h2 className="font-display text-[36px] md:text-[52px] leading-[1.04]">
+              Сделайте вдох <span className="text-white/45">вместе с нами</span>
             </h2>
-            <p className="text-white/65 text-lg mt-6 max-w-lg leading-relaxed">
-              Дыхание — самый быстрый путь от тревоги к спокойствию. Попробуйте прямо сейчас: следите за кругом
-              и дышите в его ритме. Чувствуете? А теперь представьте два часа такой практики.
+            <p className="text-white/65 text-[17px] mt-6 max-w-[520px] leading-relaxed">
+              Дыхание — самый быстрый путь от тревоги к спокойствию. Следите за кругом и дышите в его ритме:
+              четыре секунды вдох, четыре — выдох.
             </p>
           </div>
-          <div className="flex justify-center lg:justify-end">
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <BreathCircle />
           </div>
         </div>
@@ -104,43 +102,41 @@ export default function Breath() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: i * 0.15 }}
-              className="group relative rounded-[32px] overflow-hidden border border-white/10 min-h-[600px] flex flex-col"
+              className="group rounded-3xl overflow-hidden bg-white/[0.04] border border-white/10 flex flex-col"
             >
-              <img src={asset(c.image)} alt={c.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-[1.2s]" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#141311] via-[#141311]/70 to-[#141311]/10" />
-              <div className="relative z-10 p-7 md:p-9 flex justify-between items-start">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/20 px-3.5 py-1.5 text-xs font-semibold">
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img src={asset(c.image)} alt={c.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" loading="lazy" />
+                <span className="absolute top-5 left-5 h-9 px-3.5 rounded-full bg-black/40 backdrop-blur border border-white/20 text-[13px] font-medium flex items-center gap-2">
                   <c.icon className="w-3.5 h-3.5" /> {c.kind}
                 </span>
-                <span className="font-display text-3xl md:text-4xl text-[#f3d9b8]">{c.price}</span>
               </div>
-              <div className="relative z-10 mt-auto p-7 md:p-9">
-                <h3 className="font-display text-5xl md:text-6xl leading-none">{c.title}</h3>
-                <p className="text-white/75 mt-4 leading-relaxed max-w-md">{c.text}</p>
-                <div className="flex flex-wrap gap-2 mt-5">
-                  {c.points.map((p) => (
-                    <span key={p} className="text-xs rounded-full border border-white/20 px-3 py-1.5 text-white/80">{p}</span>
-                  ))}
+              <div className="p-7 md:p-8 flex flex-col flex-1">
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-[28px] leading-tight">{c.title}</h3>
+                  <span className="font-display text-[24px] text-[#e9cfae] whitespace-nowrap">{c.price}</span>
                 </div>
-                <button
-                  onClick={() => open(c.id)}
-                  className="mt-7 group/btn inline-flex items-center gap-2 rounded-full bg-[#f3d9b8] text-ink pl-6 pr-1.5 py-1.5 font-semibold hover:bg-white transition-colors"
-                >
-                  {c.cta}
-                  <span className="w-9 h-9 rounded-full bg-ink text-white flex items-center justify-center group-hover/btn:rotate-45 transition-transform">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </span>
-                </button>
+                <p className="text-white/65 text-[16px] mt-3 leading-relaxed">{c.text}</p>
+                <ul className="mt-6 grid gap-2.5">
+                  {c.points.map((p) => (
+                    <li key={p} className="flex items-center gap-3 text-[15px] text-white/85">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#e9cfae]" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-8">
+                  <Button variant="light" onClick={() => open(c.id)}>{c.cta}</Button>
+                </div>
               </div>
             </motion.article>
           ))}
         </div>
-        <p className="flex items-start gap-2 text-white/45 text-sm mt-6 max-w-3xl">
+        <p className="flex items-start gap-2 text-white/45 text-[14px] mt-8 max-w-[760px]">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
           Интенсивные дыхательные практики имеют противопоказания (беременность, заболевания сердца и сосудов,
           эпилепсия и др.). Перед записью обязательно обсудим ваше самочувствие.
         </p>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

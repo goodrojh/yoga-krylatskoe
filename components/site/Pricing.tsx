@@ -2,15 +2,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Check, ArrowUpRight } from "lucide-react";
+import { Button } from "./ui";
 import { useLead } from "./Lead";
 import { asset } from "@/lib/config";
+import { Container, Section, SectionHead } from "./ui";
 import type { FormId } from "@/lib/forms";
 
 const plans: {
   id: FormId; name: string; tagline: string; price: string; unit: string; per?: string; save?: string; popular?: boolean; features: string[];
 }[] = [
   {
-    id: "single", name: "Разовое", tagline: "Попробовать и почувствовать", price: "1 400", unit: "₽ / занятие",
+    id: "single", name: "Разовое", tagline: "Попробовать и почувствовать", price: "1 400", unit: "₽", per: "за одно занятие",
     features: ["Любое групповое направление", "Без обязательств", "Инвентарь — в зале"],
   },
   {
@@ -24,41 +26,28 @@ const plans: {
 ];
 
 const extras: { id: FormId; name: string; price: string; note: string }[] = [
-  { id: "personal", name: "Персональное занятие", price: "4 000 ₽", note: "Один на один, программа под вас" },
-  { id: "vivation", name: "Вайвейшн", price: "3 000 ₽", note: "Индивидуальная дыхательная сессия" },
-  { id: "holotropic", name: "Холотропное дыхание", price: "7 000 ₽", note: "Семинар-погружение" },
+  { id: "personal", name: "Персональное занятие", price: "4 000 ₽", note: "Один на один" },
+  { id: "vivation", name: "Вайвейшн", price: "3 000 ₽", note: "Индивидуальная сессия" },
+  { id: "holotropic", name: "Холотропное дыхание", price: "7 000 ₽", note: "Групповой семинар" },
 ];
 
 export default function Pricing() {
   const { open } = useLead();
   return (
-    <section id="pricing" className="w-full py-24 bg-cream overflow-hidden relative">
-      <div className="text-center px-6 mb-12">
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-clay uppercase tracking-[0.25em] text-xs font-bold mb-4">
-          Цены
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-display text-[44px] md:text-6xl leading-[1.02]"
-        >
-          Честно и <span className="italic text-sage">без мелкого шрифта</span>
-        </motion.h2>
-        <p className="mt-4 text-muted text-lg">Чем регулярнее практика — тем ниже цена занятия.</p>
-      </div>
-
+    <Section id="pricing">
+      <Container>
+      <SectionHead title="Цены" accent="без мелкого шрифта" text="Чем регулярнее практика, тем ниже цена занятия." />
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="mx-3 md:mx-10 xl:mx-auto max-w-[1300px] relative rounded-[28px] overflow-hidden"
+        className="relative rounded-3xl overflow-hidden"
       >
         <img src={asset("/img/studio.webp")} alt="Зал студии" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-black/10" />
 
-        <div className="relative z-10 bg-white/45 backdrop-blur-xl m-3 md:m-10 rounded-[18px] overflow-hidden border border-white/40">
+        <div className="relative z-10 bg-white/55 backdrop-blur-xl m-3 md:m-8 rounded-2xl overflow-hidden border border-white/40">
           <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/50">
             {plans.map((p, idx) => (
               <motion.div
@@ -71,34 +60,29 @@ export default function Pricing() {
               >
                 <div className="pb-7 border-b border-ink/10">
                   <div className="flex items-start justify-between gap-3 mb-1">
-                    <h3 className="font-display text-3xl">{p.name}</h3>
+                    <h3 className="font-display text-[24px]">{p.name}</h3>
                     {p.popular && (
-                      <span className="px-3 py-1 text-[10px] font-bold tracking-[0.12em] uppercase bg-clay text-white rounded-full whitespace-nowrap">
+                      <span className="h-7 px-3 text-[12px] font-semibold bg-clay text-white rounded-full whitespace-nowrap flex items-center">
                         Выгоднее всего
                       </span>
                     )}
                   </div>
                   <p className="text-sm text-ink/75">{p.tagline}</p>
                   <div className="mt-7 flex items-baseline gap-1.5">
-                    <span className="font-display font-semibold text-6xl leading-none">{p.price}</span>
+                    <span className="font-display text-[52px] leading-none">{p.price}</span>
                     <span className="text-sm font-semibold text-ink/60">{p.unit}</span>
                   </div>
                   <div className="h-6 mt-2 flex items-center gap-2 text-sm">
                     {p.per && <span className="text-ink/70">{p.per}</span>}
                     {p.save && <span className="text-sage font-bold">· {p.save}</span>}
                   </div>
-                  <button
+                  <Button
+                    variant={p.popular ? "primary" : "dark"}
                     onClick={() => open(p.id)}
-                    className={
-                      "mt-6 w-full flex items-center justify-between rounded-full p-1.5 group transition-colors " +
-                      (p.popular ? "bg-clay text-white hover:bg-clay-dark" : "bg-ink text-white hover:bg-sage-dark")
-                    }
+                    className="mt-6 w-full !justify-between"
                   >
-                    <span className="flex-1 px-5 py-2.5 text-sm font-semibold text-left">{p.id === "single" ? "Записаться" : "Оформить абонемент"}</span>
-                    <span className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center group-hover:rotate-45 transition-transform">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </span>
-                  </button>
+                    {p.id === "single" ? "Записаться" : "Оформить абонемент"}
+                  </Button>
                 </div>
                 <div className="pt-7 flex flex-col gap-3">
                   {p.features.map((f) => (
@@ -116,7 +100,7 @@ export default function Pricing() {
         </div>
       </motion.div>
 
-      <div className="max-w-[1300px] mx-3 md:mx-10 xl:mx-auto mt-6 grid md:grid-cols-3 gap-4">
+      <div className="mt-6 grid md:grid-cols-3 gap-6">
         {extras.map((e, i) => (
           <motion.button
             key={e.id}
@@ -126,14 +110,14 @@ export default function Pricing() {
             transition={{ delay: i * 0.1 }}
             whileHover={{ y: -3 }}
             onClick={() => open(e.id)}
-            className="group text-left bg-white rounded-[22px] border border-ink/5 p-6 flex items-center justify-between gap-4 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-shadow"
+            className="group text-left bg-white rounded-3xl border border-ink/5 p-6 flex items-center justify-between gap-4 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-shadow"
           >
             <div>
               <p className="font-semibold">{e.name}</p>
               <p className="text-sm text-muted mt-1">{e.note}</p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
-              <span className="font-display text-2xl font-semibold">{e.price}</span>
+              <span className="font-display text-[22px]">{e.price}</span>
               <span className="w-9 h-9 rounded-full bg-cream flex items-center justify-center group-hover:bg-clay group-hover:text-white transition-colors">
                 <ArrowUpRight className="w-4 h-4" />
               </span>
@@ -141,6 +125,7 @@ export default function Pricing() {
           </motion.button>
         ))}
       </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

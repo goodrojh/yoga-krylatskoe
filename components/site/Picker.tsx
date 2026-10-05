@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Container, Section } from "./ui";
 import { useLead } from "./Lead";
 import { asset } from "@/lib/config";
 import type { FormId } from "@/lib/forms";
@@ -23,34 +24,32 @@ export default function Picker() {
   const cur = active !== null ? OPTIONS[active] : null;
 
   return (
-    <section className="w-full px-4 md:px-6 py-24 bg-sand relative overflow-hidden">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <div>
-          <p className="text-clay uppercase tracking-[0.25em] text-xs font-bold mb-4 flex items-center gap-2">
-            <Sparkles className="w-4 h-4" /> Подбор за 10 секунд
-          </p>
-          <h2 className="font-display text-[44px] md:text-6xl leading-[1.02] mb-5">
-            Что вы чувствуете <span className="italic text-sage">прямо сейчас?</span>
+    <Section id="picker">
+      <Container className="grid lg:grid-cols-12 gap-10 lg:gap-6 items-stretch">
+        <div className="lg:col-span-5 flex flex-col">
+          <h2 className="font-display text-[36px] md:text-[52px] leading-[1.04] mb-5">
+            Что вы чувствуете <span className="text-muted">прямо сейчас?</span>
           </h2>
-          <p className="text-muted text-lg mb-8">Выберите — и мы подскажем, с чего начать.</p>
-          <div className="flex flex-wrap gap-2.5">
+          <p className="text-muted text-[17px] leading-relaxed mb-10">Выберите состояние — подскажем, с какой практики начать.</p>
+          <div className="flex flex-col gap-2">
             {OPTIONS.map((o, i) => (
               <motion.button
                 key={o.feel}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => setActive(i)}
                 className={
-                  "rounded-full px-5 py-3 text-[15px] border transition-all " +
-                  (active === i ? "bg-ink text-white border-ink shadow-xl" : "bg-cream border-ink/10 hover:border-ink/30")
+                  "h-14 rounded-2xl px-5 text-left text-[15px] font-medium border transition-all flex items-center justify-between " +
+                  (active === i ? "bg-ink text-white border-ink" : "bg-white border-ink/5 hover:border-ink/20")
                 }
               >
                 {o.feel}
+                <ArrowRight className={"w-4 h-4 transition-opacity " + (active === i ? "opacity-100" : "opacity-30")} />
               </motion.button>
             ))}
           </div>
         </div>
 
-        <div className="relative min-h-[460px] rounded-[32px] overflow-hidden bg-ink">
+        <div className="lg:col-start-7 lg:col-span-6 relative min-h-[520px] rounded-3xl overflow-hidden bg-ink">
           <AnimatePresence mode="wait">
             {cur ? (
               <motion.div key={cur.title} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }} className="absolute inset-0">
@@ -69,14 +68,12 @@ export default function Picker() {
                   transition={{ delay: 0.2 }}
                   className="absolute bottom-0 p-7 md:p-9 text-white"
                 >
-                  <span className="inline-flex rounded-full bg-white/15 backdrop-blur border border-white/25 px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                    Вам подойдёт · {cur.tag}
-                  </span>
-                  <h3 className="font-display text-4xl md:text-5xl mt-4">{cur.title}</h3>
+                  <p className="text-white/60 text-[14px]">Вам подойдёт</p>
+                  <h3 className="font-display text-[32px] md:text-[40px] leading-tight mt-1">{cur.title}</h3>
                   <p className="text-white/85 mt-3 max-w-md leading-relaxed">{cur.text}</p>
                   <button
                     onClick={() => open(cur.form)}
-                    className="mt-6 group inline-flex items-center gap-2 rounded-full bg-clay hover:bg-clay-dark px-7 py-3.5 font-semibold transition-all"
+                    className="mt-7 group inline-flex h-[52px] items-center gap-3 rounded-full bg-clay hover:bg-clay-dark px-7 text-[15px] font-semibold transition-colors"
                   >
                     Записаться <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -95,12 +92,12 @@ export default function Picker() {
                   ))}
                   <span className="w-4 h-4 rounded-full bg-[#f3d9b8] shadow-[0_0_30px_#f3d9b8]" />
                 </div>
-                <p className="font-display italic text-white/80 text-3xl mt-8">Выберите своё состояние — и мы подскажем практику</p>
+                <p className="font-display text-white/80 text-[24px] mt-8 max-w-xs">Здесь появится практика, которая подойдёт вам</p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

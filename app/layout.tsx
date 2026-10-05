@@ -1,19 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Cormorant_Garamond } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/config";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+});
+
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -59,7 +58,7 @@ const jsonLd = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body className={`${manrope.variable} ${cormorant.variable} antialiased`}>
+      <body className={`${inter.variable} ${interTight.variable} antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

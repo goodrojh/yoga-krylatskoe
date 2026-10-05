@@ -82,7 +82,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-cream">
-      <div className="m-2 rounded-[24px] overflow-hidden relative min-h-[820px] md:h-screen md:min-h-[820px] flex flex-col">
+      <div className="m-2 rounded-3xl overflow-hidden relative min-h-[820px] md:h-screen md:min-h-[820px] flex flex-col">
         <img src={asset("/img/studio.webp")} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-black/35" />
 
@@ -92,12 +92,11 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="font-display text-[54px] md:text-[96px] text-white leading-[0.95]"
+            className="font-display text-[44px] md:text-[80px] text-white leading-[1] max-w-[900px]"
           >
-            Начните <span className="italic text-[#f3d9b8]">с одного</span>
-            <br /> вдоха
+            Начните <span className="text-[#e9cfae]">с одного вдоха</span>
           </motion.h2>
-          <p className="text-white/80 mt-6 max-w-md">Оставьте номер — перезвоним, ответим на вопросы и подберём время первого занятия.</p>
+          <p className="text-white/80 text-[17px] mt-6 max-w-md">Оставьте номер — перезвоним, ответим на вопросы и подберём время первого занятия.</p>
           <InlineCallback />
         </div>
 
@@ -106,7 +105,7 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative z-10 bg-black/25 backdrop-blur-2xl border border-white/15 rounded-[24px] mx-3 md:mx-5 mb-3 md:mb-5 p-7 md:p-10 text-white"
+          className="relative z-10 bg-black/25 backdrop-blur-2xl border border-white/15 rounded-3xl mx-3 md:mx-5 mb-3 md:mb-5 p-7 md:p-10 text-white"
         >
           <div className="flex flex-col md:flex-row justify-between gap-10">
             <div className="md:w-[32%]">

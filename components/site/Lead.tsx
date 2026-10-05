@@ -149,7 +149,7 @@ function LeadModal({
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
           <div className="absolute bottom-0 p-8 text-white">
             <BreathDot />
-            <p className="font-display italic text-3xl leading-tight mt-4">
+            <p className="font-display text-[26px] leading-tight mt-4">
               «Каждая практика начинается с одного вдоха»
             </p>
           </div>
@@ -181,7 +181,7 @@ function LeadModal({
                 >
                   <Check className="w-9 h-9" strokeWidth={2.5} />
                 </motion.div>
-                <h3 className="font-display text-4xl">Спасибо, {name.split(" ")[0]}!</h3>
+                <h3 className="font-display text-[36px]">Спасибо, {name.split(" ")[0]}!</h3>
                 <p className="text-muted max-w-sm">
                   Заявка «{form.badge}» принята. Скоро свяжемся с вами по номеру{" "}
                   <span className="text-ink font-semibold whitespace-nowrap">{phone}</span>.
@@ -199,11 +199,11 @@ function LeadModal({
               </motion.div>
             ) : (
               <motion.form key="form" onSubmit={submit} noValidate className="flex flex-col gap-5">
-                <span className="inline-flex w-fit rounded-full border border-clay text-clay text-xs font-bold px-3 py-1 uppercase tracking-wider">
+                <span className="inline-flex w-fit h-7 items-center rounded-full bg-clay/10 text-clay-dark text-[13px] font-semibold px-3">
                   {form.badge}
                 </span>
                 <div>
-                  <h3 className="font-display text-[34px] sm:text-[40px] leading-[1.05] pr-10">{form.title}</h3>
+                  <h3 className="font-display text-[30px] sm:text-[36px] leading-[1.08] pr-10">{form.title}</h3>
                   <p className="text-muted mt-3 leading-relaxed">{form.subtitle}</p>
                 </div>
 
@@ -270,7 +270,7 @@ function LeadModal({
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="group h-14 rounded-full bg-clay hover:bg-clay-dark text-white font-semibold text-base flex items-center justify-center gap-2 shadow-xl shadow-clay/30 transition-all active:scale-[0.98]"
+                  className="group h-[52px] rounded-full bg-clay hover:bg-clay-dark text-white font-semibold text-base flex items-center justify-center gap-2 shadow-xl shadow-clay/30 transition-all active:scale-[0.98]"
                 >
                   {status === "sending" ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
