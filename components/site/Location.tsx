@@ -1,15 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Navigation, Phone } from "lucide-react";
+import { MapPin, Navigation, Phone, Map as MapIcon } from "lucide-react";
 import { useLead } from "./Lead";
 import { SITE } from "@/lib/config";
-import { Container, Section } from "./ui";
+import { Container, Section, Pic } from "./ui";
+import { MessengerButtons } from "./Messengers";
 
-const MAP_QUERY = encodeURIComponent(`${SITE.city}, ${SITE.address}`);
+// координаты дома Рублёвское ш., 16 к1 (OpenStreetMap)
+const LAT = 55.74018;
+const LON = 37.43437;
+const YANDEX_PLACE = `https://yandex.ru/maps/?pt=${LON},${LAT}&z=17&l=map`;
+const YANDEX_ROUTE = `https://yandex.ru/maps/?rtext=~${LAT},${LON}&rtt=auto`;
 
 export default function Location() {
   const { open } = useLead();
+  const [live, setLive] = useState(false);
   return (
     <Section id="location" tone="sand">
       <Container className="grid lg:grid-cols-12 gap-6">
@@ -46,8 +52,9 @@ export default function Location() {
           </div>
 
           <div className="mt-auto pt-8 grid gap-3">
+            <MessengerButtons />
             <a
-              href={`https://yandex.ru/maps/?rtext=~${MAP_QUERY}&rtt=auto`}
+              href={YANDEX_ROUTE}
               target="_blank"
               rel="noopener noreferrer"
               className="h-[52px] text-[15px] rounded-full bg-ink text-white font-semibold flex items-center justify-center gap-2 hover:bg-sage-dark transition-colors"
@@ -68,17 +75,39 @@ export default function Location() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="lg:col-span-7 rounded-3xl overflow-hidden min-h-[440px] bg-white relative"
+          className="lg:col-span-7 rounded-3xl overflow-hidden min-h-[420px] md:min-h-[520px] bg-[#ece6dc] relative"
         >
-          <iframe
-            title="Карта: студия на Рублёвском шоссе"
-            src={`https://yandex.ru/map-widget/v1/?text=${MAP_QUERY}&z=15`}
-            width="100%"
-            height="100%"
-            className="absolute inset-0 w-full h-full border-0 grayscale-[35%]"
-            loading="lazy"
-            allowFullScreen
-          />
+          {live ? (
+            <iframe
+              title="Карта: студия на Рублёвском шоссе"
+              src={`https://yandex.ru/map-widget/v1/?ll=${LON},${LAT}&pt=${LON},${LAT},pm2rdm&z=16`}
+              width="100%"
+              height="100%"
+              className="absolute inset-0 w-full h-full border-0"
+              allowFullScreen
+            />
+          ) : (
+            <>
+              {/* Лёгкая статичная карта (~50 КБ) вместо тяжёлого виджета — интерактивная грузится по нажатию */}
+              <a href={YANDEX_PLACE} target="_blank" rel="noopener noreferrer" aria-label="Открыть в Яндекс Картах" className="absolute inset-0">
+                <Pic src="/img/map.webp" full={1600} sizes="(max-width: 1024px) 100vw, 60vw" alt="Карта: Рублёвское шоссе, 16/1" className="absolute inset-0 w-full h-full object-cover" />
+              </a>
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full pointer-events-none flex flex-col items-center">
+                <div className="rounded-2xl bg-ink text-white px-4 py-2.5 shadow-xl text-[14px] font-semibold whitespace-nowrap">
+                  {SITE.name} · {SITE.address}
+                </div>
+                <span className="w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-ink" />
+                <span className="relative mt-1 w-4 h-4 rounded-full bg-clay ring-4 ring-white shadow-lg" />
+              </div>
+              <button
+                onClick={() => setLive(true)}
+                className="absolute right-4 bottom-4 h-11 px-5 rounded-full bg-white text-ink text-[14px] font-semibold shadow-lg flex items-center gap-2 hover:bg-cream transition-colors"
+              >
+                <MapIcon className="w-4 h-4" /> Интерактивная карта
+              </button>
+              <span className="absolute left-3 bottom-3 text-[11px] text-ink/60 bg-white/80 rounded px-1.5 py-0.5 pointer-events-none">© OpenStreetMap</span>
+            </>
+          )}
         </motion.div>
       </Container>
     </Section>

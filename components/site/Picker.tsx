@@ -55,6 +55,9 @@ export default function Picker() {
               <motion.div key={cur.title} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }} className="absolute inset-0">
                 <motion.img
                   src={asset(cur.image)}
+                  srcSet={`${asset(cur.image.replace(".webp", "-sm.webp"))} 860w, ${asset(cur.image)} 1280w`}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  decoding="async"
                   alt={cur.title}
                   className="absolute inset-0 w-full h-full object-cover"
                   initial={{ scale: 1.15 }}
@@ -83,12 +86,7 @@ export default function Picker() {
               <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 flex flex-col items-center justify-center text-center p-10">
                 <div className="relative w-40 h-40 flex items-center justify-center">
                   {[0, 1, 2].map((i) => (
-                    <motion.span
-                      key={i}
-                      className="absolute inset-0 rounded-full border border-white/30"
-                      animate={{ scale: [0.4, 1.4], opacity: [0, 0.6, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, delay: i * 1.3, ease: "easeOut" }}
-                    />
+                    <span key={i} className="ring-pulse absolute inset-0 rounded-full border border-white/30" style={{ animationDelay: `${i * 1.3}s` }} />
                   ))}
                   <span className="w-4 h-4 rounded-full bg-[#f3d9b8] shadow-[0_0_30px_#f3d9b8]" />
                 </div>

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Check, Phone, ArrowRight, Loader2 } from "lucide-react";
 import { FORMS, type FormId, type LeadForm } from "@/lib/forms";
 import { SITE, asset, waLink } from "@/lib/config";
+import { MessengerButtons } from "./Messengers";
 
 type OpenOptions = { preset?: Record<string, string[]> };
 type Ctx = { open: (id: FormId, opts?: OpenOptions) => void };
@@ -127,7 +128,7 @@ function LeadModal({
       aria-modal="true"
       aria-label={form.title}
     >
-      <div className="absolute inset-0 bg-ink/60 backdrop-blur-md" onClick={onClose} />
+      <div className="absolute inset-0 bg-ink/70 md:bg-ink/60 md:backdrop-blur-sm" onClick={onClose} />
 
       <motion.div
         initial={{ y: 60, opacity: 0, scale: 0.97 }}
@@ -140,6 +141,9 @@ function LeadModal({
         <div className="relative hidden md:block min-h-[560px] overflow-hidden rounded-l-[32px]">
           <motion.img
             src={asset(form.image)}
+                  srcSet={`${asset(form.image.replace(".webp", "-sm.webp"))} 860w, ${asset(form.image)} 1280w`}
+                  sizes="460px"
+                  decoding="async"
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             initial={{ scale: 1.15 }}
@@ -193,6 +197,10 @@ function LeadModal({
                 >
                   <Phone className="w-4 h-4" /> Не хотите ждать? {SITE.phone}
                 </a>
+                <div className="w-full max-w-sm">
+                  <p className="text-[13px] text-muted mb-2">Или напишите нам:</p>
+                  <MessengerButtons />
+                </div>
                 <button onClick={onClose} className="mt-2 rounded-full px-8 py-3 bg-ink text-white font-semibold">
                   Вернуться на сайт
                 </button>

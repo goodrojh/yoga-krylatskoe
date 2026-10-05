@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { asset } from "@/lib/config";
 
 /*
  * Дизайн-система сайта.
@@ -117,5 +118,29 @@ export function Button({
       {children}
       {arrow && <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />}
     </button>
+  );
+}
+
+/**
+ * Адаптивная картинка: телефон получает версию 860px (-sm.webp), компьютер — полную.
+ * По умолчанию грузится лениво и декодируется асинхронно, чтобы не тормозить прокрутку.
+ */
+export function Pic({
+  src,
+  sizes = "(max-width: 768px) 100vw, 50vw",
+  full = 1280,
+  ...rest
+}: Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet"> & { src: string; full?: number }) {
+  const sm = src.replace(/\.webp$/, "-sm.webp");
+  return (
+    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+    <img
+      src={asset(src)}
+      srcSet={`${asset(sm)} 860w, ${asset(src)} ${full}w`}
+      sizes={sizes}
+      loading="lazy"
+      decoding="async"
+      {...rest}
+    />
   );
 }

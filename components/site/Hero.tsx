@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Menu, X } from "lucide-react";
 import { Container, Button } from "./ui";
+import { MessengerIcons, MessengerButtons } from "./Messengers";
 import { useLead } from "./Lead";
 import { SITE, asset } from "@/lib/config";
 
@@ -50,7 +51,7 @@ export function Nav() {
       <div className="max-w-[1240px] mx-auto px-3 md:px-8">
       <div
         className={
-          "md:-mx-5 flex items-center justify-between p-2 rounded-full backdrop-blur-xl border transition-all duration-500 " +
+          "md:-mx-5 flex items-center justify-between p-2 rounded-full backdrop-blur-md border transition-colors duration-500 " +
           (scrolled ? "bg-[#1d1c19]/90 border-white/10 shadow-xl" : "bg-white/5 border-white/10")
         }
       >
@@ -58,7 +59,7 @@ export function Nav() {
           <Logo />
         </a>
 
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden xl:flex items-center gap-6">
           {NAV.map((i) => (
             <a key={i.href} href={i.href} className="text-[14px] font-medium text-white/70 hover:text-white transition-colors relative group">
               {i.label}
@@ -68,16 +69,17 @@ export function Nav() {
         </div>
 
         <div className="flex-1 flex items-center justify-end gap-2">
-          <a href={`tel:${SITE.phoneHref}`} className="hidden xl:inline-flex text-[14px] font-medium text-white/80 hover:text-white px-3 py-2 whitespace-nowrap">
+          <a href={`tel:${SITE.phoneHref}`} className="hidden 2xl:inline-flex text-[14px] font-medium text-white/80 hover:text-white px-2 py-2 whitespace-nowrap">
             {SITE.phone}
           </a>
+          <MessengerIcons className="hidden md:flex mr-1" />
           <button
             onClick={() => open("trial")}
             className="rounded-full px-5 py-2.5 text-[14px] font-semibold bg-white text-ink hover:bg-cream transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
           >
             Записаться
           </button>
-          <button onClick={() => setMenu(true)} aria-label="Меню" className="lg:hidden w-10 h-10 rounded-full text-white flex items-center justify-center hover:bg-white/10">
+          <button onClick={() => setMenu(true)} aria-label="Меню" className="xl:hidden w-10 h-10 rounded-full text-white flex items-center justify-center hover:bg-white/10">
             <Menu className="w-5 h-5" />
           </button>
         </div>
@@ -90,7 +92,7 @@ export function Nav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-ink/95 backdrop-blur-xl flex flex-col p-6 text-white"
+            className="fixed inset-0 z-[60] bg-[#1d1c19] flex flex-col p-6 text-white overflow-y-auto"
           >
             <div className="flex justify-between items-center">
               <Logo />
@@ -98,7 +100,7 @@ export function Nav() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="flex flex-col gap-5 mt-14">
+            <div className="flex flex-col gap-4 mt-12">
               {NAV.map((i, idx) => (
                 <motion.a
                   key={i.href}
@@ -107,13 +109,14 @@ export function Nav() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * idx }}
-                  className="font-display text-[36px]"
+                  className="font-display text-[32px]"
                 >
                   {i.label}
                 </motion.a>
               ))}
             </div>
-            <div className="mt-auto flex flex-col gap-3">
+            <div className="mt-auto pt-10 flex flex-col gap-3">
+              <MessengerButtons dark />
               <a href={`tel:${SITE.phoneHref}`} className="h-14 rounded-full border border-white/20 flex items-center justify-center gap-2">
                 <Phone className="w-4 h-4" /> {SITE.phone}
               </a>
@@ -131,68 +134,53 @@ export function Nav() {
 export default function Hero() {
   const { open } = useLead();
   return (
-    <section id="top" className="relative min-h-[100svh] flex flex-col bg-black w-full overflow-hidden grain">
+    <section id="top" className="relative min-h-[100svh] flex flex-col bg-black w-full overflow-hidden">
       {/* «Дышащий» фон: медленный зум как вдох-выдох */}
-      <motion.img
+      <img
         src={asset("/img/hero.webp")}
+        srcSet={`${asset("/img/hero-sm.webp")} 860w, ${asset("/img/hero.webp")} 2000w`}
+        sizes="100vw"
         alt="Практика йоги в студии с видом на парк"
-        className="absolute inset-0 w-full h-full object-cover object-[70%_center] z-0"
-        initial={{ scale: 1.12 }}
-        animate={{ scale: [1.12, 1.02, 1.12] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        className="hero-breathe absolute inset-0 w-full h-full object-cover object-[70%_center] z-0"
         fetchPriority="high"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 md:via-black/35 to-black/30 md:to-black/0 z-[1]" />
       <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/70 to-transparent z-[1]" />
 
       <Container className="relative z-10 w-full flex-1 flex flex-col pt-36 md:pt-44 pb-10">
         <div className="flex-1 flex flex-col justify-center max-w-[680px]">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <p
             className="flex items-center gap-2 text-white/75 text-[15px] mb-6"
           >
             <MapPin className="w-4 h-4" /> Кунцево · {SITE.address}
-          </motion.p>
+          </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+          <h1
             className="font-display text-white text-[44px] sm:text-[64px] lg:text-[80px] leading-[1] mb-6"
           >
             Место, где Москва <span className="text-[#e9cfae]">делает выдох</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <p
             className="text-[17px] text-white/80 max-w-[520px] leading-relaxed mb-10"
           >
             Йога, йога для беременных, TRX и МФР рядом с домом — у метро Молодёжная и Кунцевская.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+          <div
             className="flex flex-col sm:flex-row gap-3"
           >
             <Button onClick={() => open("trial")}>Записаться на первое занятие</Button>
             <Button variant="outline-light" arrow={false} onClick={() => open("callback")}>
               Перезвоните мне
             </Button>
-          </motion.div>
+          </div>
         </div>
 
         {/* Нижняя линейка: цены и метро — на одной базовой линии */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 pt-6 border-t border-white/15 grid grid-cols-2 lg:grid-cols-6 gap-y-5 gap-x-6 text-white"
+        <div
+            className="mt-16 pt-6 border-t border-white/15 grid grid-cols-2 lg:grid-cols-6 gap-y-5 gap-x-6 text-white"
         >
           <div className="col-span-2 lg:col-span-2">
             <p className="text-white/50 text-[13px] mb-1">Разовое занятие</p>
@@ -204,7 +192,7 @@ export default function Hero() {
               {m}
             </div>
           ))}
-        </motion.div>
+        </div>
       </Container>
     </section>
   );

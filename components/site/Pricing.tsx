@@ -2,9 +2,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Check, ArrowUpRight } from "lucide-react";
-import { Button } from "./ui";
+import { Button, Pic } from "./ui";
 import { useLead } from "./Lead";
-import { asset } from "@/lib/config";
+
 import { Container, Section, SectionHead } from "./ui";
 import type { FormId } from "@/lib/forms";
 
@@ -44,10 +44,10 @@ export default function Pricing() {
         transition={{ duration: 0.7 }}
         className="relative rounded-3xl overflow-hidden"
       >
-        <img src={asset("/img/studio.webp")} alt="Зал студии" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        <Pic src={"/img/studio.webp"} sizes="100vw" alt="Зал студии" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/10" />
 
-        <div className="relative z-10 bg-white/55 backdrop-blur-xl m-3 md:m-8 rounded-2xl overflow-hidden border border-white/40">
+        <div className="relative z-10 bg-white/85 md:bg-white/55 md:backdrop-blur-xl m-3 md:m-8 rounded-2xl overflow-hidden border border-white/40">
           <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/50">
             {plans.map((p, idx) => (
               <motion.div

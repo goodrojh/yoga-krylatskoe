@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Phone, MapPin, CalendarHeart } from "lucide-react";
 import { useLead, formatPhone, phoneValid, sendLead } from "./Lead";
 import { Logo } from "./Hero";
-import { SITE, asset, waLink } from "@/lib/config";
+import { Pic } from "./ui";
+import { SITE } from "@/lib/config";
+import { MessengerIcons, MessengerButtons } from "./Messengers";
 import type { FormId } from "@/lib/forms";
 
 function InlineCallback() {
@@ -35,7 +37,7 @@ function InlineCallback() {
           key="f"
           onSubmit={submit}
           noValidate
-          className={"mt-10 w-full max-w-[540px] h-16 bg-white/15 backdrop-blur-md rounded-full border flex overflow-hidden " + (err ? "border-clay" : "border-white/25")}
+          className={"mt-10 w-full max-w-[540px] h-16 bg-black/30 md:bg-white/15 md:backdrop-blur-md rounded-full border flex overflow-hidden " + (err ? "border-clay" : "border-white/25")}
         >
           <input
             type="tel"
@@ -81,9 +83,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-cream">
+    <footer id="footer" className="w-full bg-cream">
       <div className="m-2 rounded-3xl overflow-hidden relative min-h-[820px] md:h-screen md:min-h-[820px] flex flex-col">
-        <img src={asset("/img/studio.webp")} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        <Pic src={"/img/studio.webp"} sizes="100vw" alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/35" />
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pt-24 pb-10 text-center">
@@ -105,7 +107,7 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative z-10 bg-black/25 backdrop-blur-2xl border border-white/15 rounded-3xl mx-3 md:mx-5 mb-3 md:mb-5 p-7 md:p-10 text-white"
+          className="relative z-10 bg-black/50 md:bg-black/25 md:backdrop-blur-xl border border-white/15 rounded-3xl mx-3 md:mx-5 mb-3 md:mb-5 p-7 md:p-10 text-white"
         >
           <div className="flex flex-col md:flex-row justify-between gap-10">
             <div className="md:w-[32%]">
@@ -116,7 +118,7 @@ export default function Footer() {
             </div>
             {cols.map((c) => (
               <div key={c.title}>
-                <h4 className="text-[13px] font-semibold mb-4">{c.title}</h4>
+                <h3 className="text-[13px] font-semibold mb-4">{c.title}</h3>
                 <ul className="space-y-2">
                   {c.links.map((l) => (
                     <li key={l.label}>
@@ -131,22 +133,18 @@ export default function Footer() {
               </div>
             ))}
             <div>
-              <h4 className="text-[13px] font-semibold mb-4">Контакты</h4>
+              <h3 className="text-[13px] font-semibold mb-4">Контакты</h3>
               <ul className="space-y-3 text-[13px] text-white/75">
                 <li><a href={`tel:${SITE.phoneHref}`} className="flex items-center gap-2 hover:text-white"><Phone className="w-4 h-4" /> {SITE.phone}</a></li>
                 <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {SITE.address}</li>
                 <li><button onClick={() => open("trial")} className="flex items-center gap-2 hover:text-white"><CalendarHeart className="w-4 h-4" /> Записаться онлайн</button></li>
+                <li className="pt-2"><MessengerButtons dark className="!grid-cols-1 max-w-[200px]" /></li>
               </ul>
             </div>
           </div>
           <div className="mt-8 pt-5 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[12px] text-white/50">
-            <span>© {new Date().getFullYear()} {SITE.name} · {SITE.descriptor}</span>
-            <div className="flex gap-3">
-              <a href={waLink("Здравствуйте! Хочу записаться на занятие")} target="_blank" rel="noopener noreferrer" className="h-9 px-4 rounded-full border border-white/20 flex items-center hover:bg-white/10 transition-colors">WhatsApp</a>
-              {SITE.telegram && (
-                <a href={`https://t.me/${SITE.telegram}`} target="_blank" rel="noopener noreferrer" className="h-9 px-4 rounded-full border border-white/20 flex items-center hover:bg-white/10 transition-colors">Telegram</a>
-              )}
-            </div>
+            <span>© {new Date().getFullYear()} {SITE.name} · {SITE.descriptor} · Карта © OpenStreetMap</span>
+            <MessengerIcons size={40} ring="bg-white/10 hover:bg-white/20" />
           </div>
         </motion.div>
       </div>
@@ -156,29 +154,40 @@ export default function Footer() {
 
 export function MobileBar() {
   const { open } = useLead();
-  const [show, setShow] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  const [atFooter, setAtFooter] = useState(false);
+
   useEffect(() => {
-    const on = () => setShow(window.scrollY > window.innerHeight * 0.8);
+    const on = () => setPastHero(window.scrollY > window.innerHeight * 0.8);
+    on();
     window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
+    // у подвала панель убирается, чтобы не перекрывать форму и контакты
+    const footer = document.getElementById("footer");
+    const io = footer ? new IntersectionObserver(([e]) => setAtFooter(e.isIntersecting), { rootMargin: "0px 0px -80px 0px" }) : null;
+    if (footer && io) io.observe(footer);
+    return () => {
+      window.removeEventListener("scroll", on);
+      io?.disconnect();
+    };
   }, []);
+
+  const show = pastHero && !atFooter;
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          exit={{ y: 100 }}
-          className="md:hidden fixed bottom-3 inset-x-3 z-40 flex gap-2 p-2 rounded-full bg-ink/85 backdrop-blur-xl shadow-2xl border border-white/10"
-        >
-          <a href={`tel:${SITE.phoneHref}`} aria-label="Позвонить" className="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center shrink-0">
-            <Phone className="w-5 h-5" />
-          </a>
-          <button onClick={() => open("trial")} className="flex-1 h-12 rounded-full bg-clay text-white font-semibold">
-            Записаться на занятие
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div
+      className={
+        "md:hidden fixed inset-x-3 z-40 flex items-center gap-1.5 p-1.5 rounded-full bg-[#1d1c19] shadow-2xl border border-white/10 transition-transform duration-300 " +
+        (show ? "translate-y-0" : "translate-y-[calc(100%+24px)]")
+      }
+      style={{ bottom: "calc(12px + env(safe-area-inset-bottom))" }}
+      aria-hidden={!show}
+    >
+      <a href={`tel:${SITE.phoneHref}`} aria-label="Позвонить" className="w-11 h-11 rounded-full bg-white/10 text-white flex items-center justify-center shrink-0">
+        <Phone className="w-5 h-5" />
+      </a>
+      <MessengerIcons size={44} ring="bg-white/10" className="!gap-1.5" />
+      <button onClick={() => open("trial")} className="flex-1 h-11 rounded-full bg-clay text-white text-[15px] font-semibold">
+        Записаться
+      </button>
+    </div>
   );
 }

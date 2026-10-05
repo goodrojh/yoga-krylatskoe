@@ -12,7 +12,7 @@ const inter = Inter({
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin", "cyrillic"],
-  weight: ["500", "600", "700"],
+  weight: ["600"],
 });
 
 export const metadata: Metadata = {

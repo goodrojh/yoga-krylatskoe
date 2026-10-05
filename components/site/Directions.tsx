@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { Check } from "lucide-react";
 import { useLead } from "./Lead";
-import { Container, Section, SectionHead, Button } from "./ui";
-import { asset } from "@/lib/config";
+import { Container, Section, SectionHead, Button, Pic } from "./ui";
+
 import type { FormId } from "@/lib/forms";
 
 const container: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
@@ -73,10 +73,10 @@ export default function Directions() {
               className="group bg-white rounded-3xl overflow-hidden flex flex-col border border-ink/5"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img
-                  src={asset(it.image)}
+                <Pic
+                  src={it.image} sizes="(max-width: 768px) 100vw, 50vw"
                   alt={it.title}
-                  loading="lazy"
+                 
                   className={"absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 " + (it.pos ?? "")}
                 />
                 <span className="absolute top-5 left-5 h-9 px-3.5 rounded-full bg-white/85 backdrop-blur text-[13px] font-semibold flex items-center">

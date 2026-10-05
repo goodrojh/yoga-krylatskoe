@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, X, Sprout, Baby, Wallet } from "lucide-react";
 import { useLead } from "./Lead";
-import { asset } from "@/lib/config";
-import { Container, Section, Button } from "./ui";
+
+import { Container, Section, Button, Pic } from "./ui";
 
 type Item = { q: string; a: string };
 
@@ -50,15 +50,17 @@ export default function FAQ() {
           </h2>
           <p className="text-muted text-[17px] leading-relaxed mt-5">Короткие ответы для новичков, будущих мам и про оплату.</p>
         </div>
-        <div className="lg:col-span-8">
-        <div className="flex border-b border-ink/10 mb-2 overflow-x-auto no-scrollbar">
+        <div className="lg:col-span-8 min-w-0">
+        <div className="flex flex-wrap gap-2 mb-4" role="tablist">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => { setTab(t.id); setOpenIdx(null); }}
+              role="tab"
+              aria-selected={tab === t.id}
               className={
-                "inline-flex items-center gap-2 mr-7 py-3 text-[15px] border-b-2 -mb-px whitespace-nowrap transition-all " +
-                (tab === t.id ? "text-ink font-semibold border-ink" : "text-muted border-transparent hover:text-ink")
+                "inline-flex h-11 items-center gap-2 px-4 rounded-full text-[15px] border transition-colors " +
+                (tab === t.id ? "bg-ink text-white border-ink font-semibold" : "bg-white text-ink/70 border-ink/10 hover:border-ink/30")
               }
             >
               <t.icon className="w-4 h-4" /> {t.label}
@@ -92,10 +94,10 @@ export default function FAQ() {
 
         <div className="mt-10 bg-sand rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <img src={asset("/img/instructor.webp")} alt="Инструктор студии" className="w-14 h-14 rounded-full object-cover object-[center_20%] shrink-0" />
+            <Pic src={"/img/instructor.webp"} sizes="56px" alt="Инструктор студии" className="w-14 h-14 rounded-full object-cover object-[center_20%] shrink-0" />
             <div>
               <p className="font-semibold">Не нашли ответ?</p>
-              <p className="text-sm text-muted">Инструктор ответит лично</p>
+              <p className="text-sm text-muted">Гульнара ответит лично</p>
             </div>
           </div>
           <Button variant="dark" onClick={() => open("question")}>Задать вопрос</Button>

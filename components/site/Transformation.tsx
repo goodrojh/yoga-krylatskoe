@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLead } from "./Lead";
-import { Container, Section, SectionHead, Button } from "./ui";
-import { asset } from "@/lib/config";
+import { Container, Section, SectionHead, Button, Pic } from "./ui";
+
 
 type Stage = { title: string; text: string; image: string };
 
@@ -65,7 +65,7 @@ export default function Transformation() {
             className="absolute left-0 top-[7px] h-px bg-clay origin-left"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             transition={{ duration: 1.6, ease: "easeInOut" }}
             style={{ right: 0 }}
           />
@@ -95,9 +95,9 @@ export default function Transformation() {
                 className="flex flex-col"
               >
                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-ink/5">
-                  <img src={asset(it.image)} alt={it.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                  <Pic src={it.image} sizes="(max-width: 768px) 50vw, 25vw" alt={it.title} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
-                <p className="md:hidden mt-4 text-[13px] font-semibold text-clay">{STAGES[i]}</p>
+                <p className="md:hidden mt-4 text-[13px] font-semibold text-clay-dark">{STAGES[i]}</p>
                 <h3 className="font-display text-[22px] md:text-[24px] mt-2 md:mt-5">{it.title}</h3>
                 <p className="text-muted text-[15px] leading-relaxed mt-2">{it.text}</p>
               </motion.article>

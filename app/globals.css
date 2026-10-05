@@ -7,9 +7,9 @@
   --color-sand: #ece3d5;
   --color-sage: #5c7356;
   --color-sage-dark: #3f5240;
-  --color-clay: #c4703f;
-  --color-clay-dark: #a85b2e;
-  --color-muted: #7c776d;
+  --color-clay: #a85a2c;
+  --color-clay-dark: #8a4822;
+  --color-muted: #66615a;
 }
 
 html {
@@ -36,11 +36,33 @@ body {
   display: none;
 }
 
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+/* Анимации на CSS — работают сразу, без ожидания JavaScript */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.fade-up { animation: fade-up 0.7s ease-out both; }
+
+@keyframes hero-breathe {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.02); }
+}
+.hero-breathe { animation: hero-breathe 16s ease-in-out infinite; will-change: transform; }
+
+@keyframes breathe {
+  0%, 100% { transform: scale(0.55); }
+  50% { transform: scale(1); }
+}
+.breathe { animation: breathe 8s ease-in-out infinite; will-change: transform; }
+
+@keyframes ring-pulse {
+  0% { transform: scale(0.4); opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.ring-pulse { animation: ring-pulse 4s ease-out infinite; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

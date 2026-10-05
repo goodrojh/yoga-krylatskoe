@@ -1,49 +1,39 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Users, User, AlertCircle } from "lucide-react";
 import { useLead } from "./Lead";
-import { asset } from "@/lib/config";
-import { Container, Section, Button } from "./ui";
 
-// Сигнатурный элемент сайта: круг, который дышит вместе с посетителем (4 с вдох / 4 с выдох)
+import { Container, Section, Button, Pic } from "./ui";
+
+// Сигнатурный элемент сайта: круг, который дышит вместе с посетителем (4 с вдох / 4 с выдох).
+// Только CSS-трансформации и градиенты — без blur/backdrop-filter, поэтому на телефонах нет артефактов.
 function BreathCircle() {
+  const [started, setStarted] = useState(false);
   const [inhale, setInhale] = useState(true);
   useEffect(() => {
+    setStarted(true);
     const t = setInterval(() => setInhale((v) => !v), 4000);
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="relative w-[230px] h-[230px] md:w-[280px] md:h-[280px] flex items-center justify-center">
-      <motion.div
-        className="absolute inset-0 rounded-full bg-gradient-to-br from-[#f3d9b8]/40 to-clay/30 blur-2xl"
-        animate={{ scale: inhale ? 1.1 : 0.6 }}
-        transition={{ duration: 4, ease: "easeInOut" }}
+    <div className="relative w-[260px] h-[260px] md:w-[300px] md:h-[300px] select-none" aria-hidden="true">
+      {/* статичные ориентиры */}
+      <div className="absolute inset-0 rounded-full border border-white/10" />
+      <div className="absolute inset-[22.5%] rounded-full border border-white/10" />
+      {/* дышащее свечение и контур */}
+      <div
+        className={"absolute inset-0 rounded-full " + (started ? "breathe" : "")}
+        style={{ transform: "scale(0.55)", background: "radial-gradient(circle, rgba(233,207,174,0.32) 0%, rgba(196,112,63,0.16) 45%, rgba(196,112,63,0) 70%)" }}
       />
-      <motion.div
-        className="absolute rounded-full border border-[#f3d9b8]/40"
-        style={{ inset: 0 }}
-        animate={{ scale: inhale ? 1 : 0.55 }}
-        transition={{ duration: 4, ease: "easeInOut" }}
+      <div
+        className={"absolute inset-[6%] rounded-full border-2 border-[#e9cfae]/70 " + (started ? "breathe" : "")}
+        style={{ transform: "scale(0.55)" }}
       />
-      <motion.div
-        className="absolute rounded-full bg-[#f3d9b8]/10 backdrop-blur-sm border border-[#f3d9b8]/30"
-        style={{ inset: "18%" }}
-        animate={{ scale: inhale ? 1.05 : 0.6 }}
-        transition={{ duration: 4, ease: "easeInOut" }}
-      />
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={inhale ? "in" : "out"}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.6 }}
-          className="relative font-display text-[28px] text-[#e9cfae]"
-        >
-          {inhale ? "вдох" : "выдох"}
-        </motion.span>
-      </AnimatePresence>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className={"absolute font-display text-[28px] text-[#e9cfae] transition-opacity duration-700 " + (inhale ? "opacity-100" : "opacity-0")}>вдох</span>
+        <span className={"absolute font-display text-[28px] text-[#e9cfae] transition-opacity duration-700 " + (inhale ? "opacity-0" : "opacity-100")}>выдох</span>
+      </div>
     </div>
   );
 }
@@ -76,8 +66,8 @@ export default function Breath() {
   ];
 
   return (
-    <Section id="breath" tone="dark" className="grain">
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-clay/10 rounded-full blur-[160px] pointer-events-none" />
+    <Section id="breath" tone="dark">
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 35%, rgba(196,112,63,0.12), transparent 70%)" }} />
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-6 items-center mb-16">
           <div className="lg:col-span-7">
@@ -105,7 +95,7 @@ export default function Breath() {
               className="group rounded-3xl overflow-hidden bg-white/[0.04] border border-white/10 flex flex-col"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img src={asset(c.image)} alt={c.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" loading="lazy" />
+                <Pic src={c.image} sizes="(max-width: 768px) 100vw, 50vw" alt={c.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s]" />
                 <span className="absolute top-5 left-5 h-9 px-3.5 rounded-full bg-black/40 backdrop-blur border border-white/20 text-[13px] font-medium flex items-center gap-2">
                   <c.icon className="w-3.5 h-3.5" /> {c.kind}
                 </span>

@@ -3,8 +3,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { HeartHandshake, SlidersHorizontal, Wind } from "lucide-react";
 import { useLead } from "./Lead";
-import { Container, Section, Button } from "./ui";
-import { SITE, asset } from "@/lib/config";
+import { Container, Section, Button, Pic } from "./ui";
+import { SITE } from "@/lib/config";
 
 const PRINCIPLES = [
   { icon: HeartHandshake, title: "Знает каждого по имени", text: "Помнит ваш запрос, самочувствие и то, с чем вы пришли в первый раз." },
@@ -27,14 +27,14 @@ export default function Instructor() {
           className="lg:col-span-5 relative"
         >
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-sand">
-            <img
-              src={asset("/img/instructor.webp")}
+            <Pic
+              src={"/img/instructor.webp"} sizes="(max-width: 1024px) 100vw, 40vw"
               alt={name ? `${name} — инструктор студии` : "Инструктор студии"}
-              loading="lazy"
+             
               className="absolute inset-0 w-full h-full object-cover object-[center_25%]"
             />
           </div>
-          <div className="absolute left-5 right-5 bottom-5 rounded-2xl bg-white/80 backdrop-blur-xl border border-white/60 px-5 py-4">
+          <div className="absolute left-5 right-5 bottom-5 rounded-2xl bg-white/90 border border-white/60 px-5 py-4">
             {name && <p className="font-display text-[20px] leading-tight">{name}</p>}
             <p className={name ? "text-muted text-[14px] mt-1" : "font-semibold text-[15px]"}>{role}</p>
           </div>
