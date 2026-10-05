@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MapPin, Navigation, Phone, Map as MapIcon } from "lucide-react";
 import { useLead } from "./Lead";
 import { SITE } from "@/lib/config";
-import { Container, Section, Pic } from "./ui";
+import { Container, Section, Pic, MetroIcon } from "./ui";
 import { MessengerButtons } from "./Messengers";
 
 // координаты дома Рублёвское ш., 16 к1 (OpenStreetMap)
@@ -19,7 +19,7 @@ export default function Location() {
     <Section id="location" tone="sand">
       <Container className="grid lg:grid-cols-12 gap-6">
         <div
-          className="reveal lg:col-span-5 bg-white rounded-3xl p-7 md:p-10 flex flex-col border border-ink/5"
+          className="reveal lg:col-span-5 bg-white rounded-3xl p-6 md:p-10 flex flex-col border border-ink/5"
         >
           <h2 className="font-display text-[36px] md:text-[44px] leading-[1.04]">
             Рядом с домом <span className="text-muted">в Кунцево</span>
@@ -38,11 +38,11 @@ export default function Location() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mt-3">
+          <div className="grid grid-cols-2 gap-2 mt-3">
             {SITE.metro.map((m) => (
-              <div key={m} className="flex items-center gap-2.5 p-4 rounded-2xl bg-cream">
-                <span className="w-6 h-6 rounded-full border-2 border-[#e4423b] text-[10px] font-bold flex items-center justify-center">М</span>
-                <span className="font-medium text-sm">{m}</span>
+              <div key={m} className="flex items-center gap-1.5 sm:gap-2 h-12 px-3 sm:px-4 rounded-2xl bg-cream">
+                <MetroIcon size={18} />
+                <span className="font-medium text-[13px] sm:text-[14px] whitespace-nowrap">{m}</span>
               </div>
             ))}
           </div>

@@ -31,7 +31,7 @@ export function MessengerIcons({ size = 36, className = "", ring = "bg-white/10 
   );
 }
 
-/** Кнопки «логотип + название» (меню, подвал, адрес, окно «Спасибо»). */
+/** Ряд одинаковых кнопок-логотипов на всю ширину (меню, подвал, адрес, окно «Спасибо»). */
 export function MessengerButtons({ className = "", dark }: { className?: string; dark?: boolean }) {
   return (
     <div className={"grid grid-cols-3 gap-2 " + className}>
@@ -41,13 +41,14 @@ export function MessengerButtons({ className = "", dark }: { className?: string;
           href={m.href}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label={`Написать в ${m.label}`}
+          title={m.label}
           className={
-            "h-[52px] rounded-full flex items-center justify-center gap-2 text-[14px] font-semibold border transition-colors " +
-            (dark ? "border-white/20 text-white hover:bg-white/10" : "border-ink/10 bg-white hover:border-ink/30")
+            "h-[52px] rounded-full flex items-center justify-center border transition-colors " +
+            (dark ? "border-white/20 hover:bg-white/10" : "border-ink/10 bg-white hover:border-ink/30")
           }
         >
-          <img src={asset(m.icon)} alt="" width={22} height={22} className={m.id === "max" ? "rounded-[5px]" : ""} />
-          {m.label}
+          <img src={asset(m.icon)} alt={m.label} width={28} height={28} className={m.id === "max" ? "rounded-[7px]" : ""} />
         </a>
       ))}
     </div>

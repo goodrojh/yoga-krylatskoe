@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Phone, Menu, X } from "lucide-react";
-import { Container, Button } from "./ui";
+import { Container, Button, MetroIcon } from "./ui";
 import { MessengerIcons, MessengerButtons } from "./Messengers";
 import { useLead } from "./Lead";
 import { SITE, asset } from "@/lib/config";
@@ -33,6 +34,14 @@ export function Nav() {
   const { open } = useLead();
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    document.body.style.overflow = menu ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menu]);
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 80);
@@ -42,7 +51,7 @@ export function Nav() {
   }, []);
 
   return (
-    <nav className="fade-up fixed top-0 inset-x-0 z-50 pt-4">
+    <nav className="fixed top-0 inset-x-0 z-50 pt-4">
       <div className="max-w-[1240px] mx-auto px-3 md:px-8">
       <div
         className={
@@ -81,13 +90,19 @@ export function Nav() {
       </div>
       </div>
 
+      {mounted &&
+        createPortal(
       <AnimatePresence>
         {menu && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#1d1c19] flex flex-col p-6 text-white overflow-y-auto"
+            className="fixed inset-0 z-[100] bg-[#1d1c19] flex flex-col px-6 pb-6 text-white overflow-y-auto overscroll-contain"
+            style={{ paddingTop: "calc(24px + env(safe-area-inset-top))", paddingBottom: "calc(24px + env(safe-area-inset-bottom))", height: "100dvh" }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Меню"
           >
             <div className="flex justify-between items-center">
               <Logo />
@@ -100,7 +115,12 @@ export function Nav() {
                 <motion.a
                   key={i.href}
                   href={i.href}
-                  onClick={() => setMenu(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMenu(false);
+                    // сначала снимаем блокировку прокрутки, затем едем к разделу
+                    setTimeout(() => document.querySelector(i.href)?.scrollIntoView({ behavior: "smooth" }), 60);
+                  }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * idx }}
@@ -121,7 +141,9 @@ export function Nav() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+          document.body
+        )}
     </nav>
   );
 }
@@ -183,7 +205,7 @@ export default function Hero() {
           </div>
           {SITE.metro.map((m) => (
             <div key={m} className="flex items-center gap-2.5 text-[15px] text-white/85">
-              <span className="w-5 h-5 rounded-full border-2 border-[#e4423b] text-[9px] font-bold flex items-center justify-center shrink-0">М</span>
+              <MetroIcon size={20} />
               {m}
             </div>
           ))}

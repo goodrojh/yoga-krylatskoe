@@ -130,7 +130,7 @@ export default function Footer() {
                 <li><a href={`tel:${SITE.phoneHref}`} className="flex items-center gap-2 hover:text-white"><Phone className="w-4 h-4" /> {SITE.phone}</a></li>
                 <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {SITE.address}</li>
                 <li><button onClick={() => open("trial")} className="flex items-center gap-2 hover:text-white"><CalendarHeart className="w-4 h-4" /> Записаться онлайн</button></li>
-                <li className="pt-2"><MessengerButtons dark className="!grid-cols-1 max-w-[200px]" /></li>
+                <li className="pt-2"><MessengerButtons dark className="w-[200px]" /></li>
               </ul>
             </div>
           </div>

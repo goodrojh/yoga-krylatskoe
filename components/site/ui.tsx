@@ -135,3 +135,13 @@ export function Pic({
     />
   );
 }
+
+/** Значок метро: SVG фиксированного размера, не сжимается во flex и одинаков в любом браузере. */
+export function MetroIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" className="shrink-0" style={{ minWidth: size }}>
+      <circle cx="12" cy="12" r="10.75" fill="none" stroke="#e4423b" strokeWidth="2" />
+      <path d="M6.6 16.2h1.7L10 10.7l2 4.1 2-4.1 1.7 5.5h1.7L14.7 7.8 12 13.2 9.3 7.8z" fill="#e4423b" />
+    </svg>
+  );
+}
